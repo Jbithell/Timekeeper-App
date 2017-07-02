@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Carousel</title>
+  <link rel="stylesheet" href="../../build/css/onsenui.css">
+  <link rel="stylesheet" href="../../build/css/onsen-css-components.css">
+
+  <script src="../../build/js/onsenui.js"></script>
+
+  <script>
+
+  </script>
+
+  <style>
+    ons-carousel-item {
+      display: table;
+      text-align: center;
+    }
+    .item-label {
+      display: table-cell;
+      vertical-align: middle;
+      color: white;
+      line-height: 1;
+      font-size: 48px;
+      font-weight: bold;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <ons-page>
+    <ons-toolbar>
+      <div class="center">Carousel</div>
+    </ons-toolbar>
+    <ons-carousel swipeable overscrollable auto-scroll fullscreen auto-scroll-ratio="0.2">
+      <ons-carousel-item style="background-color: gray;">
+        <div class="item-label">GRAY</div>
+      </ons-carousel-item>
+      <ons-carousel-item style="background-color: #085078;">
+        <div class="item-label">BLUE</div>
+      </ons-carousel-item>
+      <ons-carousel-item style="background-color: #373B44;">
+        <div class="item-label">DARK</div>
+      </ons-carousel-item>
+      <ons-carousel-item style="background-color: #D38312;">
+        <div class="item-label">ORANGE</div>
+      </ons-carousel-item>
+    </ons-carousel>
+  </ons-page>
+
+</body>
+</html>

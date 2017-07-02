@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Pull Hook | Onsen UI</title>
+    <link rel="stylesheet" href="../../build/css/onsenui.css">
+    <link rel="stylesheet" href="../../build/css/onsen-css-components.css">
+
+    <script src="../../build/js/onsenui.js"></script>
+
+    <script>
+      ons.ready(function() {
+        var pullHook = document.getElementById('pull-hook');
+
+        pullHook.addEventListener('changestate', function(event) {
+          var message = '';
+
+          switch (event.state) {
+            case 'initial':
+              message = 'Pull to refresh';
+              break;
+            case 'preaction':
+              message = 'Release';
+              break;
+            case 'action':
+              message = 'Loading...';
+              break;
+          }
+
+          pullHook.querySelector('span').innerHTML = message;
+        });
+
+        pullHook.onAction = function(done) {
+          setTimeout(done, 1000);
+        };
+      });
+
+    </script>
+
+    <style>
+      ons-pull-hook .arrow {
+        transition: all 0.3s ease-in-out;
+        transform: rotate3d(0, 0, 0, 0deg);
+      }
+
+      ons-pull-hook[state="preaction"] .arrow {
+        transform: rotate3d(0, 0, 1, 180deg);
+      }
+
+      ons-pull-hook[state="action"] .arrow {
+        display: none;
+      }
+
+      ons-pull-hook .loader {
+        display: none;
+        transition: all 0.3s ease-in-out 0.2s;
+      }
+
+      ons-pull-hook[state="action"] .loader {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <ons-page>
+      <ons-toolbar>
+        <div class="center">Pull to refresh</div>
+      </ons-toolbar>
+
+      <ons-pull-hook id="pull-hook">
+        <ons-icon class="arrow" size="35px" icon="ion-arrow-down-a"></ons-icon>
+        <ons-icon class="loader" size="35px" spin="true" icon="ion-load-d"></ons-icon>
+        <span>Pull to refresh</span>
+      </ons-pull-hook>
+
+      <ons-list>
+        <ons-list-item>Item 1</ons-list-item>
+        <ons-list-item>Item 2</ons-list-item>
+        <ons-list-item>Item 3</ons-list-item>
+        <ons-list-item>Item 4</ons-list-item>
+        <ons-list-item>Item 5</ons-list-item>
+        <ons-list-item>Item 6</ons-list-item>
+      </ons-list>
+    </ons-page>
+  </body>
+</html>

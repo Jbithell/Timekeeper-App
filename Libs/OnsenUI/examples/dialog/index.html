@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dialog | Onsen UI</title>
+  <link rel="stylesheet" href="../../build/css/onsenui.css">
+  <link rel="stylesheet" href="../../build/css/onsen-css-components.css">
+
+  <script src="../../build/js/onsenui.js"></script>
+
+  <style>
+    .dialog-container {
+      height: 250px;
+    }
+  </style>
+
+  <script>
+    var app = {};
+
+    app.show = function() {
+      app.dialog.show();
+    };
+
+    ons.ready(function() {
+      ons.createDialog('dialog.html').then(function(dialog) {
+        app.dialog = dialog;
+      });
+    })
+
+    document.addEventListener('init', function(event) {
+      if (event.target.id === 'dialog-page1') {
+        document.getElementById('name').oninput = function(event) {
+          document.getElementById('name-model').innerHTML = event.target.value || 'Unknown';
+        };
+      } else if (event.target.id === 'dialog-page2') {
+
+        document.getElementById('description').oninput = function(event) {
+          document.getElementById('description-model').innerHTML = event.target.value || 'No description yet...';
+        };
+      }
+    })
+
+  </script>
+
+</head>
+
+<body>
+  <ons-page>
+    <ons-toolbar>
+      <div class="center">Dialog</div>
+    </ons-toolbar>
+
+    <div style="text-align: center">
+      <p>Name: <span style="font-weight: bold" id="name-model">Unknown</span style="font-weight: bold"></p>
+      <p>Description: <span id="description-model">No description yet...</span></p>
+
+      <br />
+      <ons-button onclick="app.show()">Edit</ons-button>
+    </div>
+  </ons-page>
+
+  <template id="dialog.html">
+    <ons-dialog animation="default" cancelable>
+      <ons-navigator animation="slide" id="navi" page="page1.html"></ons-navigator>
+    </ons-dialog>
+  </template>
+
+  <template id="page1.html">
+    <ons-page id ="dialog-page1">
+      <ons-toolbar>
+      <div class="center">Name</div>
+      </ons-toolbar>
+      <br />
+      <div style="text-align: center">
+        <ons-input modifier="underbar" id="name" label="Name"></ons-input>
+        <p>
+          <ons-button modifier="light" onclick="navi.bringPageTop('page2.html');">Description >></ons-button>
+        </p>
+      </div>
+      </ons-page>
+  </template>
+
+  <template id="page2.html">
+    <ons-page id ="dialog-page2">
+      <ons-toolbar>
+        <div class="center">Description</div>
+      </ons-toolbar>
+      <br />
+      <div style="text-align: center">
+        <ons-input modifier="underbar" id="description"></ons-input>
+        <p>
+          <ons-button modifier="light" onclick="navi.bringPageTop('page1.html');">Name >></ons-button>
+        </p>
+      </div>
+    </ons-page>
+  </template>
+
+</body>
+</html>

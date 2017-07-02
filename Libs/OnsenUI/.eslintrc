@@ -1,0 +1,76 @@
+{
+  "extends": "eslint:recommended",
+  "parser": "babel-eslint",
+  "env": {
+    "jasmine": true,
+    "node": true,
+    "mocha": true,
+    "browser": false,
+    "builtin": true
+  },
+  "rules": {
+    "strict": "off",
+    "prefer-const": "warn",
+    "block-scoped-var": "off",
+    "camelcase": "error",
+    "no-console": ["warn",
+      {
+        allow: ["warn", "error"]
+      }
+    ],
+    "curly": [
+      "error",
+      "all"
+    ],
+    "eqeqeq": [
+      "off"
+    ],
+    "global-strict": [
+      "off",
+      "never"
+    ],
+    "guard-for-in": "error",
+    "new-cap": "error",
+    "no-bitwise": "error",
+    "no-caller": "error",
+    "no-empty": "error",
+    "no-extend-native": "error",
+    "no-irregular-whitespace": "error",
+    "no-iterator": "off",
+    "no-new": "error",
+    "no-underscore-dangle": "off",
+    "comma-dangle": "off",
+    "no-extra-strict": "off",
+    "no-extra-parens": "off",
+    "no-lone-blocks": "warn",
+    "no-unused-expressions": "off",
+    "no-trailing-spaces": "warn",
+    "no-multi-spaces": "off",
+    "no-shadow": "off",
+    "no-redeclare": "off",
+    "no-sequences": "error",
+    "no-undef": "off",
+    "no-unused-vars": "off",
+    "key-spacing": ["error", {
+      "beforeColon": false,
+      "afterColon": true
+    }],
+    "no-use-before-define": [
+      "error",
+      "nofunc"
+    ],
+    "no-with": "error",
+    "quotes": [
+      "warn",
+      "single", {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ],
+    "valid-typeof": "error",
+    "wrap-iife": [
+      "error",
+      "inside"
+    ]
+  }
+}
