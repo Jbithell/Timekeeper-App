@@ -7,7 +7,7 @@ myApp.services = {
   /////////////////
   // Task Service //
   /////////////////
-  tasks: {
+  projects: {
 
     // Creates a new task and attaches it to the pending task list.
     create: function(data) {
@@ -18,13 +18,18 @@ myApp.services = {
            '<ons-checkbox></ons-checkbox>' +
           '</label>' +
           '<div class="center">' +
-            data.title +
+            data.timekeeper_projects_name +
           '</div>' +
           '<div class="right">' +
             '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
           '</div>' +
         '</ons-list-item>'
       );
+      if (data["SUBPROJECTS"]) {
+          $.each( data["SUBPROJECTS"], function( key, value ) {
+              myApp.services.projects.create(value);
+          });
+      }
 
       // Store data within the element.
       taskItem.data = data;
@@ -225,55 +230,6 @@ myApp.services = {
     {
       title: 'Download OnsenUI',
       category: 'Programming',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Install Monaca CLI',
-      category: 'Programming',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Star Onsen UI repo on Github',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Register in the community forum',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Send donations to Fran and Andreas',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Profit',
-      category: '',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Visit Japan',
-      category: 'Travels',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Enjoy an Onsen with Onsen UI team',
-      category: 'Personal',
       description: 'Some description.',
       highlight: false,
       urgent: false
