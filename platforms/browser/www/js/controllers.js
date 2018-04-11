@@ -22,7 +22,6 @@ myApp.controllers = {
       element.show && element.show(); // Fix ons-fab in Safari.
     });
 
-    // Change tabbar animation depending on platform.
     page.querySelector('#myTabbar').setAttribute('animation', ons.platform.isAndroid() ? 'slide' : 'none');
   },
 

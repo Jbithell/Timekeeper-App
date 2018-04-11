@@ -7,106 +7,138 @@ myApp.services = {
   /////////////////
   // Task Service //
   /////////////////
-  tasks: {
+  projects: {
 
     // Creates a new task and attaches it to the pending task list.
     create: function(data) {
       // Task item template.
-      var taskItem = ons.createElement(
+      var projectItem = ons.createElement(
         '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category)+ '">' +
-          '<label class="left">' +
-           '<ons-checkbox></ons-checkbox>' +
-          '</label>' +
+          '<div class="left"><div class="subProjectPadding" style="width: ' + data.timekeeper_projects_subprojectTier*10 + 'px;"></div>' + hoursMinutesSeconds(data.timekeeper_projects_totalTime, false, true, true, false) + '</div>' +
           '<div class="center">' +
-            data.title +
+            data.timekeeper_projects_name +
           '</div>' +
           '<div class="right">' +
-            '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
+          '<span class="notification">' + hoursMinutesSeconds(data.SUBPROJECT_TOTAL_TIME, false, true, true, false) + '</span>' +
           '</div>' +
         '</ons-list-item>'
+
       );
 
       // Store data within the element.
-      taskItem.data = data;
+      projectItem.data = data;
 
-      // Add 'completion' functionality when the checkbox changes.
-      taskItem.data.onCheckboxChange = function(event) {
-        myApp.services.animators.swipe(taskItem, function() {
-          var listId = (taskItem.parentElement.id === 'pending-list' && event.target.checked) ? '#completed-list' : '#pending-list';
-          document.querySelector(listId).appendChild(taskItem);
-        });
-      };
-
-      taskItem.addEventListener('change', taskItem.data.onCheckboxChange);
-
-      // Add button functionality to remove a task.
-      taskItem.querySelector('.right').onclick = function() {
-        myApp.services.tasks.remove(taskItem);
-      };
-
-      // Add functionality to push 'details_task.html' page with the current element as a parameter.
-      taskItem.querySelector('.center').onclick = function() {
+      // Add functionality to push 'details_project.html' page with the current element as a parameter.
+      projectItem.querySelector('.center').onclick = function() {
         document.querySelector('#myNavigator')
-          .pushPage('html/details_task.html',
+          .pushPage('html/details_project.html',
             {
               animation: 'lift',
               data: {
-                element: taskItem
+                element: projectItem
               }
             }
           );
       };
 
       // Check if it's necessary to create new categories for this item.
-      myApp.services.categories.updateAdd(taskItem.data.category);
+      myApp.services.categories.updateAdd(projectItem.data.category);
 
-      // Add the highlight if necessary.
-      if (taskItem.data.highlight) {
-        taskItem.classList.add('highlight');
+      //if (projectItem.data.highlight) {
+      //  projectItem.classList.add('highlight');
+      //}
+
+      document.querySelector('#project-list').insertBefore(projectItem,null);
+
+      //insert sub projects
+      if (data["SUBPROJECTS"]) {
+          $.each( data["SUBPROJECTS"], function( key, value ) {
+              myApp.services.projects.create(value);
+          });
       }
 
-      // Insert urgent tasks at the top and non urgent tasks at the bottom.
-      var pendingList = document.querySelector('#pending-list');
-      pendingList.insertBefore(taskItem, taskItem.data.urgent ? pendingList.firstChild : null);
     },
 
+
     // Modifies the inner data and current view of an existing task.
-    update: function(taskItem, data) {
-      if (data.title !== taskItem.data.title) {
+    update: function(projectItem, data) {
+      if (data.title !== projectItem.data.title) {
         // Update title view.
-        taskItem.querySelector('.center').innerHTML = data.title;
+        projectItem.querySelector('.center').innerHTML = data.title;
       }
 
-      if (data.category !== taskItem.data.category) {
+      if (data.category !== projectItem.data.category) {
         // Modify the item before updating categories.
-        taskItem.setAttribute('category', myApp.services.categories.parseId(data.category));
+        projectItem.setAttribute('category', myApp.services.categories.parseId(data.category));
         // Check if it's necessary to create new categories.
         myApp.services.categories.updateAdd(data.category);
         // Check if it's necessary to remove empty categories.
-        myApp.services.categories.updateRemove(taskItem.data.category);
+        myApp.services.categories.updateRemove(projectItem.data.category);
 
       }
 
       // Add or remove the highlight.
-      taskItem.classList[data.highlight ? 'add' : 'remove']('highlight');
+      projectItem.classList[data.highlight ? 'add' : 'remove']('highlight');
 
       // Store the new data within the element.
-      taskItem.data = data;
+      projectItem.data = data;
     },
 
     // Deletes a task item and its listeners.
-    remove: function(taskItem) {
-      taskItem.removeEventListener('change', taskItem.data.onCheckboxChange);
+    remove: function(projectItem) {
+      projectItem.removeEventListener('change', projectItem.data.onCheckboxChange);
 
-      myApp.services.animators.remove(taskItem, function() {
+      myApp.services.animators.remove(projectItem, function() {
         // Remove the item before updating the categories.
-        taskItem.remove();
+        projectItem.remove();
         // Check if the category has no items and remove it in that case.
-        myApp.services.categories.updateRemove(taskItem.data.category);
+        myApp.services.categories.updateRemove(projectItem.data.category);
       });
     }
   },
+    sessions: {
 
+        // Creates a new task and attaches it to the pending task list.
+        create: function (data) {
+            // Task item template.
+            var sessionItem = ons.createElement(
+                '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category) + '">' +
+                '<div class="left">' + hoursMinutesSeconds(data.timekeeper_sessions_time, false, true, true, true) + '</div>' +
+                '<div class="center">' +
+                data.PROJECT.timekeeper_projects_name_short +
+                '</div>' +
+                '<div class="right">' +
+                '<span class="notification">' + '</span>' +
+                '</div>' +
+                '</ons-list-item>'
+            );
+
+            // Store data within the element.
+            sessionItem.data = data;
+
+            // Add functionality to push 'details_session.html' page with the current element as a parameter.
+            sessionItem.querySelector('.center').onclick = function () {
+                document.querySelector('#myNavigator')
+                    .pushPage('html/details_session.html',
+                        {
+                            animation: 'lift',
+                            data: {
+                                element: sessionItem
+                            }
+                        }
+                    );
+            };
+
+            // Check if it's necessary to create new categories for this item.
+            myApp.services.categories.updateAdd(sessionItem.data.category);
+
+            //if (sessionItem.data.highlight) {
+            //  sessionItem.classList.add('highlight');
+            //}
+            document.querySelector('#session-list').insertBefore(sessionItem, null);
+
+        },
+    },
   /////////////////////
   // Category Service //
   ////////////////////
@@ -157,15 +189,6 @@ myApp.services = {
       }
     },
 
-    // Deletes a category item and its listeners.
-    remove: function(categoryItem) {
-      if (categoryItem) {
-        // Remove listeners and the item itself.
-        categoryItem.removeEventListener('change', categoryItem.updateCategoryView);
-        categoryItem.remove();
-      }
-    },
-
     // Adds filtering functionality to a category item.
     bindOnCheckboxChange: function(categoryItem) {
       var categoryId = categoryItem.getAttribute('category-id');
@@ -174,9 +197,9 @@ myApp.services = {
       categoryItem.updateCategoryView = function() {
         var query = '[category="' + (categoryId || '') + '"]';
 
-        var taskItems = document.querySelectorAll('#tabbarPage ons-list-item');
-        for (var i = 0; i < taskItems.length; i++) {
-          taskItems[i].style.display = (allItems || taskItems[i].getAttribute('category') === categoryId) ? '' : 'none';
+        var projectItems = document.querySelectorAll('#tabbarPage ons-list-item');
+        for (var i = 0; i < projectItems.length; i++) {
+          projectItems[i].style.display = (allItems || projectItems[i].getAttribute('category') === categoryId) ? '' : 'none';
         }
       };
 
@@ -218,65 +241,4 @@ myApp.services = {
     }
   },
 
-  ////////////////////////
-  // Initial Data Service //
-  ////////////////////////
-  fixtures: [
-    {
-      title: 'Download OnsenUI',
-      category: 'Programming',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Install Monaca CLI',
-      category: 'Programming',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Star Onsen UI repo on Github',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Register in the community forum',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Send donations to Fran and Andreas',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Profit',
-      category: '',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Visit Japan',
-      category: 'Travels',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Enjoy an Onsen with Onsen UI team',
-      category: 'Personal',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    }
-  ]
 };
