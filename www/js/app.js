@@ -17,7 +17,7 @@ function hoursMinutesSeconds(time, d, h,m,s) {
         output += hours + 'h' + '';
         time -= hours*3600;
     }
-    if (time > 60 && m) {
+    if (m) {
         minutes = Math.floor(time/60);
         output += minutes + 'm' + '';
         time -= minutes*60;
@@ -33,7 +33,7 @@ function apicall(path, data, callback) {
     if (data !== null) var senddata = data;
     else var senddata = {};
     $.ajax({
-        url: 'https://jbithell.com/projects/timekeeper/api/v4/' + path,
+        url: 'https://jbithell.com/projects/timekeeper/api/v4/' + path + "?USERKEY=43233&USERSECRET=23453459", //TODO remove these tokens and use proper auth - these tokens are only used for this and they need to be revoked asap
         type : "GET",
         data : senddata,
         cache : false,
@@ -71,8 +71,8 @@ document.addEventListener('init', function(event) {
     if (document.querySelector('#menuPage')
       && document.querySelector('#projectListPage')
       && !document.querySelector('#projectListPage ons-list-item')) {
-        //TODO remove these tokens and use proper auth - these tokens are only used for this and they need to be revoked asap
-        apicall("projects/list/?USERKEY=43233&USERSECRET=23453459", null, function(data) {
+
+        apicall("projects/list/", null, function(data) {
             $.each( data["PROJECTS"], function( key, value ) {
                 myApp.services.projects.create(value);
             });
@@ -87,6 +87,12 @@ document.addEventListener('init', function(event) {
                 }
 
             });
+        });
+        apicall("productivity/get/", null, function(data) {
+            $.each( data["generalProductivity"], function( key, value ) {
+                console.log(hoursMinutesSeconds(value,false,true,true,true));
+            });
+
         });
     }
   }
