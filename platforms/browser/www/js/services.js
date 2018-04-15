@@ -9,9 +9,7 @@ myApp.services = {
   /////////////////
   projects: {
 
-    // Creates a new task and attaches it to the pending task list.
     create: function(data) {
-      // Task item template.
       var projectItem = ons.createElement(
         '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category)+ '">' +
           '<div class="left"><div class="subProjectPadding" style="width: ' + data.timekeeper_projects_subprojectTier*10 + 'px;"></div>' + hoursMinutesSeconds(data.timekeeper_projects_totalTime, false, true, true, false) + '</div>' +
@@ -19,7 +17,7 @@ myApp.services = {
             data.timekeeper_projects_name +
           '</div>' +
           '<div class="right">' +
-          '<span class="notification">' + hoursMinutesSeconds(data.SUBPROJECT_TOTAL_TIME, false, true, true, false) + '</span>' +
+          '<span class="notification">' + (data.SUBPROJECT_TOTAL_TIME >0 ? hoursMinutesSeconds(data.SUBPROJECT_TOTAL_TIME, false, true, true, false) : "") + '</span>' +
           '</div>' +
         '</ons-list-item>'
 
@@ -209,35 +207,6 @@ myApp.services = {
     // Transforms a category name into a valid id.
     parseId: function(categoryLabel) {
       return categoryLabel ? categoryLabel.replace(/\s\s+/g, ' ').toLowerCase() : '';
-    }
-  },
-
-  //////////////////////
-  // Animation Service //
-  /////////////////////
-  animators: {
-
-    // Swipe animation for task completion.
-    swipe: function(listItem, callback) {
-      var animation = (listItem.parentElement.id === 'pending-list') ? 'animation-swipe-right' : 'animation-swipe-left';
-      listItem.classList.add('hide-children');
-      listItem.classList.add(animation);
-
-      setTimeout(function() {
-        listItem.classList.remove(animation);
-        listItem.classList.remove('hide-children');
-        callback();
-      }, 950);
-    },
-
-    // Remove animation for task deletion.
-    remove: function(listItem, callback) {
-      listItem.classList.add('animation-remove');
-      listItem.classList.add('hide-children');
-
-      setTimeout(function() {
-        callback();
-      }, 750);
     }
   },
 

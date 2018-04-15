@@ -13,10 +13,10 @@ myApp.controllers = {
       document.querySelector('#mySplitter').left.toggle();
     };
 
-    // Set button functionality to push 'new_task.html' page.
-    Array.prototype.forEach.call(page.querySelectorAll('[component="button/new-task"]'), function(element) {
+    // Set button functionality to push 'new_session.html' page.
+    Array.prototype.forEach.call(page.querySelectorAll('[component="button/new-session"]'), function(element) {
       element.onclick = function() {
-        document.querySelector('#myNavigator').pushPage('html/new_task.html');
+        document.querySelector('#myNavigator').pushPage('html/new_session.html');
       };
 
       element.show && element.show(); // Fix ons-fab in Safari.
@@ -72,21 +72,21 @@ myApp.controllers = {
   },
 
   ////////////////////////////////
-  // Details Task Page Controller //
+  // Project Page Control //
   ///////////////////////////////
   detailsTaskPage: function(page) {
     // Get the element passed as argument to pushPage.
     var element = page.data.element;
 
     // Fill the view with the stored data.
-    page.querySelector('#title-input').value = element.data.title;
-    page.querySelector('#category-input').value = element.data.category;
-    page.querySelector('#description-input').value = element.data.description;
-    page.querySelector('#highlight-input').checked = element.data.highlight;
-    page.querySelector('#urgent-input').checked = element.data.urgent;
+    page.querySelector('#title-input').value = element.data.timekeeper_projects_name;
+      page.querySelector('#shortTitle-input').value = element.data.timekeeper_projects_name_short;
+    //page.querySelector('#category-input').value = element.data.category;
+    //page.querySelector('#highlight-input').checked = element.data.highlight;
+    //page.querySelector('#urgent-input').checked = element.data.urgent;
 
-    // Set button functionality to save an existing task.
-    page.querySelector('[component="button/save-task"]').onclick = function() {
+    // Set button functionality to save an existing project.
+    page.querySelector('[component="button/save-project"]').onclick = function() {
       var newTitle = page.querySelector('#title-input').value;
 
       if (newTitle) {
@@ -99,8 +99,8 @@ myApp.controllers = {
           }
         ).then(function(buttonIndex) {
           if (buttonIndex === 1) {
-            // If 'Save' button was pressed, overwrite the task.
-            myApp.services.tasks.update(element,
+            // If 'Save' button was pressed, overwrite the project.
+            myApp.services.projects.update(element,
               {
                 title: newTitle,
                 category: page.querySelector('#category-input').value,
@@ -119,7 +119,7 @@ myApp.controllers = {
 
       } else {
         // Show alert if the input title is empty.
-        ons.notification.alert('You must provide a task title.');
+        ons.notification.alert('You must provide a project title.');
       }
     };
   }

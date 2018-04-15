@@ -1,9 +1,27 @@
 <ons-page id="menuPage">
 
-  <ons-list-title>Links</ons-list-title>
+  <ons-list-title></ons-list-title>
   <ons-list id="links">
+
     <ons-list-item tappable style="cursor: pointer" modifier="longdivider chevron"
-      onclick="window.open('https://jbithell.com')"
+                   onclick="document.querySelector('#myNavigator').pushPage('html/new_project.html');"
+    >
+      <div class="left">
+        <ons-icon icon="fa-plus" style="color: grey;"></ons-icon>
+      </div>
+      <div class="center">
+        Add Project
+      </div>
+    </ons-list-item>
+    <ons-list-item tappable style="cursor: pointer" modifier="longdivider chevron"
+                   onclick="document.querySelector('#myNavigator').pushPage('html/about.html');"
+    >
+      <div class="center">
+        About
+      </div>
+    </ons-list-item>
+    <ons-list-item tappable style="cursor: pointer" modifier="longdivider chevron"
+                   onclick="window.open('https://jbithell.com')"
     >
       <div class="left">
         <ons-icon icon="fa-external-link" style="color: grey;"></ons-icon>

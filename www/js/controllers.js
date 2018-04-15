@@ -13,10 +13,10 @@ myApp.controllers = {
       document.querySelector('#mySplitter').left.toggle();
     };
 
-    // Set button functionality to push 'new_task.html' page.
-    Array.prototype.forEach.call(page.querySelectorAll('[component="button/new-task"]'), function(element) {
+    // Set button functionality to push 'new_session.html' page.
+    Array.prototype.forEach.call(page.querySelectorAll('[component="button/new-session"]'), function(element) {
       element.onclick = function() {
-        document.querySelector('#myNavigator').pushPage('html/new_task.html');
+        document.querySelector('#myNavigator').pushPage('html/new_session.html');
       };
 
       element.show && element.show(); // Fix ons-fab in Safari.

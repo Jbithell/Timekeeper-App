@@ -6,7 +6,18 @@
 
   <script src="lib/onsen/js/onsenui.js"></script>
   <script src="lib/jquery/jquery-3.3.1.min.js"></script>
-  <script src="lib/moment.js"></script>
+
+  <!--Moment.js-->
+  <script src="lib/momentjs/moment-with-locales.js"></script>
+
+  <!--https://github.com/d3/d3-->
+  <script src="lib/d3/d3.min.js"></script>
+
+  <!--https://github.com/g1eb/calendar-heatmap-->
+  <link rel="stylesheet" type="text/css" href="lib/calendar-heatmap/calendar-heatmap.min.css">
+  <script type="text/javascript" src="lib/calendar-heatmap/calendar-heatmap.js"></script>
+
+  <!--App Scripts-->
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
@@ -50,23 +61,25 @@
         <div class="right">
           <!-- Toolbar-button  only visible for iOS/other. -->
           <ons-if platform="ios other">
-            <ons-toolbar-button component="button/new-task">New</ons-toolbar-button>
+            <ons-toolbar-button component="button/new-session">New Session</ons-toolbar-button>
           </ons-if>
         </div>
       </ons-toolbar>
 
       <!-- Floating Action Button only visible for Android. -->
-      <ons-if platform="android other">
-        <ons-fab position="right bottom" component="button/new-task">
+      <ons-if platform="android">
+        <ons-fab position="right bottom" component="button/new-session">
           <ons-icon icon="md-edit"></ons-icon>
         </ons-fab>
       </ons-if>
 
       <!-- Auto-positioned Tabbar: top on Android, bottom on iOS/other. -->
       <ons-tabbar id="myTabbar" position="auto">
-        <ons-tab page="html/session-list.html" label="Sessions" active>
+        <ons-tab page="html/session-list.html" label="Sessions">
         </ons-tab>
-        <ons-tab page="html/project-list.html" label="Projects">
+        <ons-tab page="html/project-list.html" label="Projects" active>
+        </ons-tab>
+        <ons-tab page="html/productivity.html" label="Productivity">
         </ons-tab>
       </ons-tabbar>
     </ons-page>

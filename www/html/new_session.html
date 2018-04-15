@@ -1,42 +1,31 @@
-<ons-page id="detailsTaskPage">
+<ons-page id="newTaskPage">
   <ons-toolbar>
     <div class="left"><ons-back-button>Back</ons-back-button></div>
-    <div class="center">Project Details</div>
+    <div class="center">New Session</div>
     <div class="right">
-      <!--<ons-toolbar-button component="button/save-task">
-        <ons-if platform="android">
+      <ons-if platform="android">
+        <ons-toolbar-button component="button/save-task">
           <ons-icon icon="md-save"></ons-icon>
-        </ons-if>
-        <ons-if platform="ios other">
-          Save
-        </ons-if>
-      </ons-toolbar-button>-->
+        </ons-toolbar-button>
+      </ons-if>
     </div>
   </ons-toolbar>
-  <ons-list-title>Details</ons-list-title>
+
+  <ons-list-title>Add a new task</ons-list-title>
   <ons-list>
     <ons-list-item modifier="nodivider">
-      <ons-if platform="ios other" class="left left-label">
-        Title
-      </ons-if>
       <div class="center">
-        <ons-input id="title-input" type="text" placeholder="Project Name" float></ons-input>
+        <ons-input id="title-input" type="text" placeholder="I want to..." float></ons-input>
       </div>
     </ons-list-item>
     <ons-list-item modifier="nodivider">
-      <ons-if platform="ios other" class="left left-label">
-        Shorter Title
-      </ons-if>
-      <div class="center">
-        <ons-input id="shortTitle-input" maxlength="16" type="text" placeholder="Project Short Name" float></ons-input>
-      </div>
-    </ons-list-item>
-    <ons-list-item modifier="nodivider">
-      <ons-if platform="ios other" class="left left-label">
-        Category
-      </ons-if>
       <div class="center">
         <ons-input id="category-input" type="text" placeholder="Category" float></ons-input>
+      </div>
+    </ons-list-item>
+    <ons-list-item modifier="nodivider">
+      <div class="center">
+        <ons-input id="description-input" type="text" placeholder="Description" float></ons-input>
       </div>
     </ons-list-item>
   </ons-list>
@@ -56,8 +45,12 @@
         Is it urgent?
       </label>
       <div class="right">
-        <ons-switch id="urgent-input" input-id="inner-urgent-input" disabled></ons-switch>
+        <ons-switch id="urgent-input" input-id="inner-urgent-input"></ons-switch>
       </div>
     </ons-list-item>
   </ons-list>
+
+  <ons-if platform="ios other">
+    <ons-button modifier="large" component="button/save-task">Add New Task</ons-button>
+  </ons-if>
 </ons-page>

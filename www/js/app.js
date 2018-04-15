@@ -52,7 +52,7 @@ function apicall(path, data, callback) {
             console.log(jqXHR);
             console.log(jqXHR['responseText']);
             console.log(errorThrown);
-            alert("Sorry, we are having issues connecting to the network. Please reload the page and try again");
+            ons.notification.alert("Sorry, we are having issues connecting to the network. Please reload the page and try again");
         }
     });
 }
@@ -60,18 +60,15 @@ function apicall(path, data, callback) {
 document.addEventListener('init', function(event) {
   var page = event.target;
 
-  // Each page calls its own initialization controller.
   if (myApp.controllers.hasOwnProperty(page.id)) {
     myApp.controllers[page.id](page);
   }
 
-  // Fill the lists with initial data when the pages we need are ready.
-    // This only happens once at the beginning of the app.
   if (page.id === 'menuPage' || page.id === 'projectListPage') {
     if (document.querySelector('#menuPage')
       && document.querySelector('#projectListPage')
       && !document.querySelector('#projectListPage ons-list-item')) {
-
+        //Doc has been initialised and ready to go
         apicall("projects/list/", null, function(data) {
             $.each( data["PROJECTS"], function( key, value ) {
                 myApp.services.projects.create(value);
@@ -88,12 +85,24 @@ document.addEventListener('init', function(event) {
 
             });
         });
-        apicall("productivity/get/", null, function(data) {
-            $.each( data["generalProductivity"], function( key, value ) {
-                console.log(hoursMinutesSeconds(value,false,true,true,true));
-            });
-
-        });
+        calendarHeatmap.init([{
+            "date": "2016-01-01",
+            "total": 17164,
+            "details": [{
+                "name": "Project 1",
+                "date": "2016-01-01 12:30:45",
+                "value": 9192
+            }, {
+                "name": "Project 2",
+                "date": "2016-01-01 13:37:00",
+                "value": 6753
+            },
+                {
+                    "name": "Project N",
+                    "date": "2016-01-01 17:52:41",
+                    "value": 1219
+                }]
+        }],"heatmapContainer", '#f77e9d', 'month');
     }
-  }
+    }
 });

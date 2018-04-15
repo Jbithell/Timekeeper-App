@@ -17,7 +17,7 @@ function hoursMinutesSeconds(time, d, h,m,s) {
         output += hours + 'h' + '';
         time -= hours*3600;
     }
-    if (time > 60 && m) {
+    if (m) {
         minutes = Math.floor(time/60);
         output += minutes + 'm' + '';
         time -= minutes*60;
@@ -33,7 +33,7 @@ function apicall(path, data, callback) {
     if (data !== null) var senddata = data;
     else var senddata = {};
     $.ajax({
-        url: 'https://jbithell.com/projects/timekeeper/api/v4/' + path,
+        url: 'https://jbithell.com/projects/timekeeper/api/v4/' + path + "?USERKEY=43233&USERSECRET=23453459", //TODO remove these tokens and use proper auth - these tokens are only used for this and they need to be revoked asap
         type : "GET",
         data : senddata,
         cache : false,
@@ -52,7 +52,7 @@ function apicall(path, data, callback) {
             console.log(jqXHR);
             console.log(jqXHR['responseText']);
             console.log(errorThrown);
-            alert("Sorry, we are having issues connecting to the network. Please reload the page and try again");
+            ons.notification.alert("Sorry, we are having issues connecting to the network. Please reload the page and try again");
         }
     });
 }
@@ -60,19 +60,16 @@ function apicall(path, data, callback) {
 document.addEventListener('init', function(event) {
   var page = event.target;
 
-  // Each page calls its own initialization controller.
   if (myApp.controllers.hasOwnProperty(page.id)) {
     myApp.controllers[page.id](page);
   }
 
-  // Fill the lists with initial data when the pages we need are ready.
-    // This only happens once at the beginning of the app.
   if (page.id === 'menuPage' || page.id === 'projectListPage') {
     if (document.querySelector('#menuPage')
       && document.querySelector('#projectListPage')
       && !document.querySelector('#projectListPage ons-list-item')) {
-        //TODO remove these tokens and use proper auth - these tokens are only used for this and they need to be revoked asap
-        apicall("projects/list/?USERKEY=43233&USERSECRET=23453459", null, function(data) {
+        //Doc has been initialised and ready to go
+        apicall("projects/list/", null, function(data) {
             $.each( data["PROJECTS"], function( key, value ) {
                 myApp.services.projects.create(value);
             });
@@ -88,6 +85,24 @@ document.addEventListener('init', function(event) {
 
             });
         });
+        calendarHeatmap.init([{
+            "date": "2016-01-01",
+            "total": 17164,
+            "details": [{
+                "name": "Project 1",
+                "date": "2016-01-01 12:30:45",
+                "value": 9192
+            }, {
+                "name": "Project 2",
+                "date": "2016-01-01 13:37:00",
+                "value": 6753
+            },
+                {
+                    "name": "Project N",
+                    "date": "2016-01-01 17:52:41",
+                    "value": 1219
+                }]
+        }],"heatmapContainer", '#f77e9d', 'month');
     }
-  }
+    }
 });
