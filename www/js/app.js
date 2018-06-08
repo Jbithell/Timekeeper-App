@@ -70,12 +70,14 @@ document.addEventListener('init', function(event) {
       && !document.querySelector('#projectListPage ons-list-item')) {
         //Doc has been initialised and ready to go
         apicall("projects/list/", null, function(data) {
-            projectData = data;
-            $.each( projectData["data"]["PROJECTS"], function( key, value ) {
-                myApp.services.projects.create(value);
+            projectData = data["data"];
+            $.each( projectData["PROJECTS"], function( key, value ) {
+                if (value['timekeeper_projects_subprojectTier'] == 0) {
+                    myApp.services.projects.create(value);
+                }
             });
             var previousDate = "";
-            $.each( projectData["data"]["SESSIONS"], function( key, value ) {
+            $.each( projectData["SESSIONS"], function( key, value ) {
                 if (moment(value["timekeeper_sessions_start"]).format('Do MMM YYYY') != previousDate) {
                     document.querySelector('#session-list').innerHTML = document.querySelector('#session-list').innerHTML + '<ons-list-header>' + moment(value["timekeeper_sessions_start"]).format('dddd Do MMM YYYY') + '</ons-list-header>';
                     previousDate = moment(value["timekeeper_sessions_start"]).format('Do MMM YYYY');
@@ -91,7 +93,7 @@ document.addEventListener('init', function(event) {
                 $.each( data["data"], function( key, value ) {
                     var thisDay = {"date": moment(key).format(),"details": [],"total":0};
                     $.each( value, function( subKey, subValue ) {
-                        thisDay.details.push({"name": projectData["data"]["PROJECTS"][projectData["data"]["PROJECTS-IDTOKEYMAP"][subKey]]["timekeeper_projects_name"],"date": moment(key).format() + " 00:00:00","value": subValue});
+                        thisDay.details.push({"name": projectData["PROJECTS"][projectData["PROJECTS-IDTOKEYMAP"][subKey]]["timekeeper_projects_name"],"date": moment(key).format() + " 00:00:00","value": subValue});
                         thisDay.total += subValue;
                     });
                     heatmapdata.push(thisDay);

@@ -51,7 +51,8 @@ myApp.services = {
       //insert sub projects
       if (data["SUBPROJECTS"]) {
           $.each( data["SUBPROJECTS"], function( key, value ) {
-              myApp.services.projects.create(value);
+              //[projectData["PROJECTS-IDTOKEYMAP"]]
+              myApp.services.projects.create(projectData["PROJECTS"][value]);
           });
       }
 
