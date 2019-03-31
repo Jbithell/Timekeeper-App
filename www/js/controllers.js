@@ -40,33 +40,14 @@ myApp.controllers = {
   ////////////////////////////
   // New Task Page Controller //
   ////////////////////////////
-  newTaskPage: function(page) {
+  newSessionPage: function(page) {
     // Set button functionality to save a new task.
     Array.prototype.forEach.call(page.querySelectorAll('[component="button/save-task"]'), function(element) {
       element.onclick = function() {
-        var newTitle = page.querySelector('#title-input').value;
+        var project = page.querySelector('#title-input').value;
 
-        if (newTitle) {
-          // If input title is not empty, create a new task.
-          myApp.services.tasks.create(
-            {
-              title: newTitle,
-              category: page.querySelector('#category-input').value,
-              description: page.querySelector('#description-input').value,
-              highlight: page.querySelector('#highlight-input').checked,
-              urgent: page.querySelector('#urgent-input').checked
-            }
-          );
+        document.querySelector('#myNavigator').popPage();
 
-          // Set selected category to 'All', refresh and pop page.
-          document.querySelector('#default-category-list ons-list-item ons-radio').checked = true;
-          document.querySelector('#default-category-list ons-list-item').updateCategoryView();
-          document.querySelector('#myNavigator').popPage();
-
-        } else {
-          // Show alert if the input title is empty.
-          ons.notification.alert('You must provide a task title.');
-        }
       };
     });
   },

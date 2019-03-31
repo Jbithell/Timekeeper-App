@@ -12,7 +12,7 @@ myApp.services = {
     create: function(data) {
       var projectItem = ons.createElement(
         '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category)+ '">' +
-          '<div class="left"><div class="subProjectPadding" style="width: ' + data.timekeeper_projects_subprojectTier*10 + 'px;"></div>' + hoursMinutesSeconds(data.timekeeper_projects_totalTime, false, true, true, false) + '</div>' +
+          '<div class="left"><div class="subProjectPadding" style="width: ' + data.timekeeper_projects_subprojectTier*10 + 'px;"></div>' + hoursMinutesSeconds(data.timekeeper_projects_totalTime, false, true, true, false) + '&nbsp;&nbsp;</div>' +
           '<div class="center">' +
             data.timekeeper_projects_name +
           '</div>' +
@@ -22,6 +22,15 @@ myApp.services = {
         '</ons-list-item>'
 
       );
+
+      //List of options for new session
+      const option = document.createElement('option');
+      var text = document.getElementById('optionLabel').value;
+      option.innerText = text;
+      text = data.timekeeper_projects_name;
+      document.getElementById('chooseAProjectSelector').appendChild(option);
+      //End new session option
+
 
       // Store data within the element.
       projectItem.data = data;
@@ -102,7 +111,7 @@ myApp.services = {
             // Task item template.
             var sessionItem = ons.createElement(
                 '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category) + '">' +
-                '<div class="left">' + hoursMinutesSeconds(data.timekeeper_sessions_time, false, true, true, true) + '</div>' +
+                '<div class="left">' + hoursMinutesSeconds(data.timekeeper_sessions_time, false, true, true, true) + '&nbsp;&nbsp;</div>' +
                 '<div class="center">' +
                 data.PROJECT.timekeeper_projects_name_short +
                 '</div>' +
