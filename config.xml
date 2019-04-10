@@ -14,7 +14,7 @@
 
 
     <plugin name="cordova-plugin-whitelist" />
-    <access origin="https://jbithell.com" />
+    <access origin="*" />
 
     <preference name="permissions" value="none"/>
     <preference name="orientation" value="default"/>
