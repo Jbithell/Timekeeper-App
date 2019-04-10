@@ -572,13 +572,10 @@
         });
 
         function updateAuth(username, password) {
-            alert("Starting");
             window.localStorage.setItem('timeKeeperUsername', username);
             window.localStorage.setItem('timeKeeperPassword', password);
-            alert("Halfway");
             instance.defaults.params["USERKEY"] = username;
             instance.defaults.params["USERSECRET"] = password;
-            alert("Done");
         }
 
         // Setup Toaster
@@ -609,7 +606,6 @@
         moment.locale("en-gb");
         moment().tz("UTC").format();
         function setMomentJSOffset(serverTime) {
-            console.log(serverTime);
             var offset = new Date(serverTime).getTime() - Date.now();
             moment.now = function() {
                 return offset + Date.now();
@@ -624,12 +620,13 @@
             Pace.start();
             instance.get('/projects/list/', {})
                 .then(function (response) {
+                    alert("Got data");
                     setMomentJSOffset(response.data.timestamp*1000);
                     $("#projectsList").html("");
                     $("#runningSessionsList").html("");
                     $("#historicalSessionsList").html("");
                     var data = response.data.data;
-                    console.log(data);
+                    alert("Goung through it");
                     $(data.SESSIONS).each(function (index, value) {
                         if (value.timekeeper_sessions_end == null) {
                             if (value.THISUSER) {
@@ -700,6 +697,7 @@
                             }
                         }
                     });
+                    alert("Fininshed going throuhg it");
                 })
                 .catch(function (error) {
                     console.log(error);
