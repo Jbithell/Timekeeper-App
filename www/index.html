@@ -907,6 +907,11 @@
             $("#loginModal").modal("hide");
             pageDataRefresh();
         });
+
+
+        $(document).on('click', '#refresh', function () {
+            pageDataRefresh();
+        });
         $(document).on('click', '#logout', function () {
             updateAuth("", "");
             window.localStorage.clear();
@@ -958,7 +963,13 @@
 <div class="container" style="width: 100%;">
     <div class="row">
         <div class="col-md-4 col-sm-12">
-            <h3><button class="btn btn-default" id="logout" title="Logout"><i class="fa fa-sign-out"></i></button>   Projects</h3>
+            <table border="0" style="width: 100%;">
+                <tr>
+                    <td style="width:100%;"><h3>Projects</h3></td>
+                    <td style="min-width: 90px; text-align: right;"><button class="btn btn-default btn-sm" id="logout" title="Logout"><i class="fa fa-sign-out"></i></button><button class="btn btn-default btn-sm" id="refresh" title="Reload Data" style="margin-left: 4px;"><i class="fa fa-refresh"></i></button>
+                    </td>
+                </tr>
+            </table>
             <table class="table table-striped">
                 <thead>
                 <tr>
