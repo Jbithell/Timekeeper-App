@@ -576,6 +576,8 @@
             window.localStorage.setItem('timeKeeperPassword', password);
             instance.defaults.params["USERKEY"] = username;
             instance.defaults.params["USERSECRET"] = password;
+            alert(instance.defaults.params["USERKEY"]);
+            alert(instance.defaults.params["USERSECRET"]);
         }
 
         // Setup Toaster
@@ -620,13 +622,11 @@
             Pace.start();
             instance.get('/projects/list/', {})
                 .then(function (response) {
-                    alert("Got data");
                     setMomentJSOffset(response.data.timestamp*1000);
                     $("#projectsList").html("");
                     $("#runningSessionsList").html("");
                     $("#historicalSessionsList").html("");
                     var data = response.data.data;
-                    alert("Goung through it");
                     $(data.SESSIONS).each(function (index, value) {
                         if (value.timekeeper_sessions_end == null) {
                             if (value.THISUSER) {
@@ -697,11 +697,9 @@
                             }
                         }
                     });
-                    alert("Fininshed going throuhg it");
                 })
                 .catch(function (error) {
                     console.log(error);
-                    bootbox.alert(error);
                     toastr["error"]("Check your connection", "Error downloading data from api");
                 })
                 .then(function () {
