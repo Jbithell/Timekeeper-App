@@ -13,7 +13,13 @@
     <icon src="icon.png" />
 
 
-    <plugin name="cordova-plugin-whitelist" />
+    <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
+    <!-- Allow links to web pages to open in a browser -->
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+
+    <access origin="https://jbithell.com" />
+    
     <access origin="*" />
     <access origin="https://*.phonegap.com" subdomains="true" />
 
