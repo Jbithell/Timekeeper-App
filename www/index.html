@@ -700,6 +700,7 @@
                 })
                 .catch(function (error) {
                     console.log(error);
+                    bootbox.alert(error);
                     toastr["error"]("Check your connection", "Error downloading data from api");
                 })
                 .then(function () {
