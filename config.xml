@@ -12,6 +12,7 @@
 
     <icon src="icon.png" />
 
+    <preference name="phonegap-version" value="cli-8.1.1" />
 
     <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
     <!-- Allow links to web pages to open in a browser -->
