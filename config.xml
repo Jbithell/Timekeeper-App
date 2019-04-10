@@ -19,7 +19,7 @@
     <allow-intent href="https://*/*" />
 
     <access origin="https://jbithell.com" />
-    
+
     <access origin="*" />
     <access origin="https://*.phonegap.com" subdomains="true" />
 
@@ -29,4 +29,9 @@
     <preference name="auto-hide-splash-screen" value="true"/>
     <preference name="disable-cursor" value="false"/>
     <preference name="android-installLocation" value="auto"/>
+
+    <platform name="android">
+        <preference name="android-minSdkVersion" value="14" />
+    </platform>
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="26" />
 </widget>
