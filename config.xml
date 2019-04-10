@@ -8,5 +8,10 @@
         James Bithell
     </author>
     <content src="index.html" />
-    <access origin="*" />
+
+    <access origin="https://jbithell.com" />
+
+    <icon src="icon.png" />
+
+
 </widget>
